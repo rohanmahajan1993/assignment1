@@ -136,9 +136,10 @@ class MulOp(Op):
         return new_node
 
     def compute(self, node, input_vals):
-        """Given values of two input nodes, return result of element-wise multiplication."""
-        """TODO: Your code here"""
+	assert len(input_vals) == 2
+        return input_vals[0] * input_vals[1]
 
+	
     def gradient(self, node, output_grad):
         """Given gradient of multiply node, return gradient contributions to each input."""
         """TODO: Your code here"""
@@ -153,8 +154,8 @@ class MulByConstOp(Op):
         return new_node
 
     def compute(self, node, input_vals):
-        """Given values of input node, return result of element-wise multiplication."""
-        """TODO: Your code here"""
+	assert len(input_vals) == 1
+        return input_vals[0] * self.const_attr
 
     def gradient(self, node, output_grad):
         """Given gradient of multiplication node, return gradient contribution to input."""
@@ -184,8 +185,8 @@ class MatMulOp(Op):
         return new_node
 
     def compute(self, node, input_vals):
-        """Given values of input nodes, return result of matrix multiplication."""
-        """TODO: Your code here"""
+	assert len(input_vals) == 2
+	return np.matmul(input_vals[0], input_vals[1])
 
     def gradient(self, node, output_grad):
         """Given gradient of multiply node, return gradient contributions to each input.
@@ -311,9 +312,8 @@ def gradients(output_node, node_list):
     node_to_output_grad = {}
     # Traverse graph in reverse topological order given the output_node that we are taking gradient wrt.
     reverse_topo_order = reversed(find_topo_sort([output_node]))
-
-    """TODO: Your code here"""
-
+    for node in reverse_topo_order:
+	
     # Collect results for gradients requested.
     grad_node_list = [node_to_output_grad[node] for node in node_list]
     return grad_node_list
